@@ -1,0 +1,63 @@
+/*! Font Awesome — ручной сабсет для prom-opora.ru */
+@font-face{font-family:"Font Awesome 6 Brands";font-style:normal;font-weight:400;font-display:swap;src:url("../webfonts/fa-brands-400.woff2") format("woff2"),url("../webfonts/fa-brands-400.ttf") format("truetype")}
+@font-face{font-family:"Font Awesome 6 Free";font-style:normal;font-weight:400;font-display:swap;src:url("../webfonts/fa-regular-400.woff2") format("woff2"),url("../webfonts/fa-regular-400.ttf") format("truetype")}
+@font-face{font-family:"Font Awesome 6 Free";font-style:normal;font-weight:900;font-display:swap;src:url("../webfonts/fa-solid-900.woff2") format("woff2"),url("../webfonts/fa-solid-900.ttf") format("truetype")}
+.fa,.fas{font-family:"Font Awesome 6 Free";font-weight:900;-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased;display:inline-block;font-style:normal;font-variant:normal;line-height:1;font-size:inherit;text-rendering:auto}
+.far{font-family:"Font Awesome 6 Free";font-weight:400}
+.fab{font-family:"Font Awesome 6 Brands";font-weight:400}
+.fa{font-family:FontAwesome;font-weight:400}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.fa-filter:before{content:"\f0b0"}
+.fa-folder-open:before{content:"\f07c"}
+.fa-folder:before{content:"\f07b"}
+.fa-file-pdf:before{content:"\f1c1"}
+.fa-file:before{content:"\f15b"}
+.fa-credit-card:before{content:"\f09d"}
+.fa-eye:before{content:"\f06e"}
+.fa-eye-slash:before{content:"\f070"}
+.fa-paperclip:before{content:"\f0c6"}
+.fa-search:before{content:"\f002"}
+.fa-phone:before{content:"\f095"}
+.fa-map-marker-alt:before{content:"\f3c5"}
+.fa-map-pin:before{content:"\f276"}
+.fa-shopping-basket:before{content:"\f291"}
+.fa-times:before{content:"\f00d"}
+.fa-times-circle:before{content:"\f057"}
+.fa-check:before{content:"\f00c"}
+.fa-check-circle:before{content:"\f058"}
+.fa-exclamation-circle:before{content:"\f06a"}
+.fa-viber:before{content:"\f409"}
+.fa-whatsapp:before{content:"\f232"}
+.fa-telegram-plane:before,.fa-telegram:before{content:"\f3fe"}
+.fa-sliders-h:before{content:"\f1de"}
+.fa-truck:before{content:"\f0d1"}
+.fa-truck-loading:before{content:"\f4e0"}
+.fa-drafting-compass:before{content:"\f568"}
+.fa-envelope:before{content:"\f0e0"}
+.fa-clock:before{content:"\f017"}
+.fa-mobile-alt:before{content:"\f3cd"}
+.fa-chevron-down:before{content:"\f078"}
+.fa-chevron-left:before{content:"\f053"}
+.fa-chevron-right:before{content:"\f054"}
+.fa-angle-down:before{content:"\f107"}
+.fa-angle-left:before{content:"\f104"}
+.fa-angle-right:before{content:"\f105"}
+.fa-plus:before{content:"\f067"}
+.fa-minus:before{content:"\f068"}
+.fa-star:before{content:"\f005"}
+.fa-bars:before{content:"\f0c9"}
+.fa-ruble-sign:before{content:"\f158"}
+.fa-spinner:before{content:"\f110"}
+.fa-arrow-right:before{content:"\f061"}
+.fa-download:before{content:"\f019"}
+.fa-print:before{content:"\f02f"}
+.fa-calculator:before{content:"\f1ec"}
+.fa-calendar:before{content:"\f133"}
+.fa-user:before{content:"\f007"}
+.fa-users:before{content:"\f0c0"}
+.fa-home:before{content:"\f015"}
+.fa-percent:before{content:"\f295"}
+.fa-tag:before{content:"\f02b"}
+@font-face{font-family:FontAwesome;font-display:swap;font-weight:400 900;src:url("../webfonts/fa-solid-900.woff2") format("woff2"),url("../webfonts/fa-solid-900.ttf") format("truetype")}
+.fa-solid{font-family:"Font Awesome 6 Free";font-weight:900}
+.fa-regular{font-family:"Font Awesome 6 Free";font-weight:400}

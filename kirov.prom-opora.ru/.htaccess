@@ -1,0 +1,4 @@
+# Журнал заявок и журнал ошибок почты недоступны по прямому адресу
+<FilesMatch "^(claims\.csv|mail-errors\.log)$">
+    Require all denied
+</FilesMatch>

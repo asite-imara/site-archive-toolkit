@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Скилл «Копия сайтов» — презентация</title>
+<style>
+  :root{
+    --paper:#f4f1ea;
+    --paper-2:#ece8de;
+    --ink:#1e3448;
+    --ink-soft:#4a6076;
+    --teal:#2a8f82;
+    --teal-deep:#1f6e64;
+    --amber:#e09c2f;
+    --line:#c9c2b2;
+    --shadow:0 18px 50px rgba(30,52,72,.14);
+    --serif:Georgia,'Times New Roman',serif;
+    --sans:'Segoe UI',Tahoma,sans-serif;
+    --mono:Consolas,'Courier New',monospace;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    font-family:var(--sans);
+    background:var(--paper);
+    color:var(--ink);
+    overflow:hidden;
+  }
+  /* зернистость бумаги */
+  body::before{
+    content:"";position:fixed;inset:0;pointer-events:none;z-index:50;opacity:.5;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .04 0'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23noise)'/%3E%3C/svg%3E");
+  }
+  .deck{position:relative;height:100vh;width:100vw}
+  .slide{
+    position:absolute;inset:0;
+    display:none;
+    padding:6vh 7vw 11vh;
+    flex-direction:column;
+  }
+  .slide.active{display:flex}
+  /* служебная строка как в техническом паспорте */
+  .passport{
+    display:flex;justify-content:space-between;align-items:baseline;
+    border-bottom:2px solid var(--ink);
+    padding-bottom:.7rem;margin-bottom:3.2rem;
+    font-family:var(--mono);font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--ink-soft);
+  }
+  .passport b{color:var(--teal-deep);font-weight:600}
+  .kicker{
+    font-family:var(--mono);font-size:.82rem;letter-spacing:.22em;text-transform:uppercase;
+    color:var(--amber);margin-bottom:1rem;
+  }
+  h1,h2{font-family:var(--serif);font-weight:400;line-height:1.08}
+  h1{font-size:clamp(2.4rem,5.4vw,4.6rem);letter-spacing:-.01em}
+  h2{font-size:clamp(1.9rem,3.8vw,3.2rem);margin-bottom:2.6rem}
+  h2 em{font-style:normal;color:var(--teal-deep)}
+  .lead{font-size:clamp(1.05rem,1.6vw,1.3rem);color:var(--ink-soft);max-width:52ch;line-height:1.55}
+  .accent{color:var(--teal-deep)}
+  .amber{color:var(--amber)}
+
+  /* появления */
+  .active .rise{animation:rise .7s cubic-bezier(.2,.7,.2,1) both}
+  .active .rise:nth-child(2){animation-delay:.1s}
+  .active .d1{animation-delay:.08s}.active .d2{animation-delay:.18s}
+  .active .d3{animation-delay:.28s}.active .d4{animation-delay:.38s}
+  .active .d5{animation-delay:.48s}.active .d6{animation-delay:.58s}
+  @keyframes rise{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
+
+  /* ---------- слайд 1 ---------- */
+  .title-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:4vw;align-items:center;flex:1;min-height:0}
+  .title-note{margin-top:2.2rem;padding-left:1.1rem;border-left:3px solid var(--amber);color:var(--ink-soft);font-size:1.02rem;max-width:46ch;line-height:1.5}
+  .comic{
+    width:100%;max-height:64vh;object-fit:contain;
+    border:1px solid var(--line);background:#fff;
+    box-shadow:var(--shadow);transform:rotate(.6deg);
+  }
+  .stamp{
+    display:inline-block;margin-top:1.6rem;
+    font-family:var(--mono);font-size:.8rem;letter-spacing:.3em;text-transform:uppercase;
+    color:var(--amber);border:2px solid var(--amber);
+    padding:.45rem 1rem .35rem;transform:rotate(-2deg);
+  }
+
+  /* ---------- слайд 2 ---------- */
+  .split{display:grid;grid-template-columns:1fr 1fr;gap:3.5vw;flex:1;min-height:0;align-content:start}
+  .asks{list-style:none;display:flex;flex-direction:column;gap:1rem}
+  .asks li{
+    display:flex;gap:1.1rem;align-items:baseline;
+    font-size:clamp(1.05rem,1.5vw,1.28rem);
+  }
+  .asks .n{font-family:var(--mono);color:var(--teal-deep);font-size:.85rem;white-space:nowrap}
+  .before{
+    background:var(--ink);color:#e8e4d8;padding:2rem 2.2rem;
+    box-shadow:var(--shadow);position:relative;
+  }
+  .before::after{
+    content:"раньше";position:absolute;top:-0.75rem;right:1.4rem;
+    background:var(--amber);color:var(--ink);
+    font-family:var(--mono);font-size:.72rem;letter-spacing:.25em;text-transform:uppercase;
+    padding:.3rem .8rem .25rem;
+  }
+  .before p{font-size:1.02rem;line-height:1.6}
+  .before b{color:#ffd58a;font-weight:600}
+  .before .gap{height:1.1rem}
+
+  /* ---------- слайд 3 ---------- */
+  .products{display:grid;grid-template-columns:repeat(3,1fr);gap:1.6rem;flex:1;min-height:0;align-content:start}
+  .card{
+    background:#fff;border:1px solid var(--line);border-top:5px solid var(--teal);
+    padding:1.8rem 1.7rem;box-shadow:0 10px 30px rgba(30,52,72,.08);
+  }
+  .card:nth-child(2){border-top-color:var(--amber)}
+  .card:nth-child(3){border-top-color:var(--ink)}
+  .card .num{font-family:var(--mono);font-size:.8rem;letter-spacing:.2em;color:var(--ink-soft)}
+  .card h3{font-family:var(--serif);font-weight:400;font-size:1.5rem;margin:.6rem 0 .8rem}
+  .card p{font-size:.98rem;line-height:1.55;color:var(--ink-soft)}
+  .frame{
+    margin-top:2rem;padding:1.3rem 1.7rem;
+    background:var(--paper-2);border-left:4px solid var(--teal-deep);
+    font-size:1.12rem;line-height:1.5;
+  }
+  .frame b{color:var(--teal-deep)}
+
+  /* ---------- слайд 4 ---------- */
+  .chain{display:flex;gap:0;align-items:stretch;flex:0 0 auto;margin-top:.6rem}
+  .step{
+    flex:1;position:relative;padding:1.5rem 1.6rem 1.5rem 1.9rem;
+    background:#fff;border:1px solid var(--line);border-right:none;
+  }
+  .step:last-child{border-right:1px solid var(--line)}
+  .step::before{
+    content:"";position:absolute;right:-1.15rem;top:50%;transform:translateY(-50%);
+    border:1.15rem solid transparent;border-left-color:var(--amber);z-index:2;
+  }
+  .step:last-child::before{display:none}
+  .step .num{font-family:var(--mono);font-size:.75rem;letter-spacing:.2em;color:var(--amber)}
+  .step h3{font-family:var(--serif);font-weight:400;font-size:1.35rem;margin:.5rem 0 .5rem}
+  .step p{font-size:.92rem;line-height:1.5;color:var(--ink-soft)}
+  .artifacts{
+    margin-top:3rem;display:grid;grid-template-columns:auto 1fr;gap:2.5rem;align-items:center;
+  }
+  .art-note{font-size:1.08rem;line-height:1.6;color:var(--ink-soft);max-width:70ch}
+  .art-note b{color:var(--ink)}
+  .principle{
+    background:var(--ink);color:#e8e4d8;padding:1.4rem 1.8rem;
+    font-family:var(--mono);font-size:.98rem;line-height:1.55;box-shadow:var(--shadow);
+  }
+  .principle span{color:#ffd58a}
+
+  /* ---------- слайд 5 ---------- */
+  .abilities{display:grid;grid-template-columns:1fr 1fr;gap:.9rem 3rem;flex:1;min-height:0;align-content:start}
+  .ab{display:flex;gap:1rem;align-items:baseline;padding-bottom:.85rem;border-bottom:1px dashed var(--line)}
+  .ab .mark{font-family:var(--mono);color:var(--teal-deep);font-size:.85rem}
+  .ab p{font-size:1.06rem;line-height:1.45}
+  .ab p span{color:var(--ink-soft)}
+
+  /* ---------- слайд 6 ---------- */
+  .case{display:grid;grid-template-columns:repeat(3,1fr);gap:1.6rem;flex:1;min-height:0;align-content:start}
+  .fact{background:#fff;border:1px solid var(--line);padding:1.7rem 1.8rem;position:relative}
+  .fact::before{content:"";position:absolute;left:0;top:0;bottom:0;width:5px;background:var(--teal)}
+  .fact:nth-child(2)::before{background:var(--amber)}
+  .fact:nth-child(3)::before{background:var(--ink)}
+  .fact h3{font-family:var(--serif);font-weight:400;font-size:1.35rem;margin-bottom:.9rem}
+  .fact dl{display:grid;grid-template-columns:auto 1fr;gap:.5rem 1rem;font-size:.95rem}
+  .fact dt{color:var(--ink-soft)}
+  .fact dd{font-family:var(--mono);font-size:.92rem;text-align:right}
+  .fact dd b{color:var(--teal-deep);font-weight:600}
+  .quote{
+    margin-top:2.1rem;text-align:center;font-family:var(--serif);
+    font-size:clamp(1.25rem,2.1vw,1.8rem);line-height:1.4;color:var(--ink);
+  }
+  .quote span{border-bottom:3px solid var(--amber);padding-bottom:.15rem}
+
+  /* ---------- слайд 7 ---------- */
+  .limits{display:grid;grid-template-columns:1.1fr .9fr;gap:4vw;flex:1;min-height:0;align-content:start}
+  .limits ul{list-style:none;display:flex;flex-direction:column;gap:1.2rem}
+  .limits li{display:flex;gap:1.1rem;font-size:1.12rem;line-height:1.5}
+  .limits li .n{font-family:var(--mono);color:var(--amber);white-space:nowrap}
+  .limits li span{color:var(--ink-soft)}
+  .why{
+    align-self:start;background:var(--paper-2);border:1px solid var(--line);
+    padding:2rem 2.2rem;box-shadow:0 10px 30px rgba(30,52,72,.08);
+  }
+  .why h3{font-family:var(--serif);font-weight:400;font-size:1.5rem;margin-bottom:.8rem}
+  .why p{font-size:1.05rem;line-height:1.6;color:var(--ink-soft)}
+  .why b{color:var(--teal-deep)}
+
+  /* ---------- слайд 8 ---------- */
+  .demo{display:grid;grid-template-columns:1fr 1fr;gap:3.5vw;flex:1;min-height:0;align-content:center}
+  .demo-step{padding:2rem 2.2rem;background:#fff;border:1px solid var(--line);position:relative}
+  .demo-step:first-child{border-top:5px solid var(--teal)}
+  .demo-step:last-child{border-top:5px solid var(--amber)}
+  .demo-step .tag{font-family:var(--mono);font-size:.78rem;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-soft)}
+  .demo-step h3{font-family:var(--serif);font-weight:400;font-size:1.6rem;margin:.6rem 0 .7rem}
+  .demo-step p{font-size:1rem;line-height:1.55;color:var(--ink-soft)}
+  .demo-line{
+    margin-top:2.4rem;text-align:center;font-size:1.2rem;line-height:1.5;color:var(--ink-soft);
+  }
+  .demo-line b{color:var(--ink)}
+
+  /* ---------- слайд 9 ---------- */
+  .final{display:grid;grid-template-columns:1fr 1fr;gap:4vw;flex:1;min-height:0;align-content:start}
+  .status{list-style:none;display:flex;flex-direction:column;gap:1rem}
+  .status li{display:flex;gap:1rem;align-items:baseline;font-size:1.08rem}
+  .dot{width:.62rem;height:.62rem;border-radius:50%;flex:none;transform:translateY(.05rem)}
+  .dot.done{background:var(--teal)}
+  .dot.wip{background:var(--amber)}
+  .status span{color:var(--ink-soft)}
+  .cta{
+    background:var(--ink);color:#e8e4d8;padding:2.2rem 2.4rem;box-shadow:var(--shadow);
+  }
+  .cta h3{font-family:var(--serif);font-weight:400;font-size:1.7rem;margin-bottom:.9rem}
+  .cta p{font-size:1.05rem;line-height:1.6}
+  .cta b{color:#ffd58a}
+
+  /* ---------- навигация ---------- */
+  .nav{
+    position:fixed;left:0;right:0;bottom:0;z-index:40;
+    display:flex;justify-content:space-between;align-items:center;
+    padding:.85rem 7vw;
+    border-top:1px solid var(--line);
+    background:rgba(244,241,234,.92);backdrop-filter:blur(4px);
+    font-family:var(--mono);font-size:.8rem;letter-spacing:.15em;
+  }
+  .nav .counter{color:var(--ink-soft)}
+  .nav .counter b{color:var(--ink);font-size:1rem}
+  .nav button{
+    font-family:var(--mono);font-size:.8rem;letter-spacing:.15em;text-transform:uppercase;
+    background:none;border:1px solid var(--ink);color:var(--ink);
+    padding:.45rem 1.1rem;cursor:pointer;transition:.2s;
+  }
+  .nav button:hover{background:var(--ink);color:var(--paper)}
+  .progress{position:fixed;top:0;left:0;height:4px;background:var(--amber);z-index:45;transition:width .35s ease}
+
+  @media (max-aspect-ratio:1/1){
+    .title-grid,.split,.limits,.final,.demo{grid-template-columns:1fr}
+    .products,.case{grid-template-columns:1fr;overflow:auto}
+    .chain{flex-direction:column}
+    .step::before{display:none}
+    .slide{overflow-y:auto;padding-bottom:14vh}
+  }
+</style>
+</head>
+<body>
+<div class="progress" id="progress"></div>
+<div class="deck" id="deck">
+
+  <!-- 1 -->
+  <section class="slide active">
+    <div class="passport rise"><span>СКИЛЛ · <b>КОПИЯ САЙТОВ</b></span><span>2026-09-23</span></div>
+    <div class="title-grid">
+      <div>
+        <div class="kicker rise d1">Методика в рабочем виде · проверена на трёх живых задачах</div>
+        <h1 class="rise d2">Скилл «Копия сайтов»:<br>архивация и пересборка<br>сайтов силами <span class="accent">Claude Code</span></h1>
+        <p class="title-note rise d3">Запуск, контроль и приёмка — специалист. Рутину делает машина. Это не «нажал кнопку — получил сайт», а конвейер под управлением человека.</p>
+        <span class="stamp rise d4">MVP · внутреннее представление</span>
+      </div>
+      <figure class="rise d3">
+        <img class="comic" src="../creativity/pr-cy-image-2026-09-23-08-11-00.png" alt="Комикс: один день со скиллом">
+      </figure>
+    </div>
+  </section>
+
+  <!-- 2 -->
+  <section class="slide">
+    <div class="passport"><span>02 · <b>ОТКУДА ЗАДАЧА</b></span><span>регулярные запросы</span></div>
+    <div class="kicker rise">Зачем это вообще делать</div>
+    <h2 class="rise d1">Задачи, которые приходят <em>каждый месяц</em></h2>
+    <div class="split">
+      <ul class="asks">
+        <li class="rise d1"><span class="n">01</span>Бэкап перед редизайном — «снимите сайт как есть»</li>
+        <li class="rise d2"><span class="n">02</span>Перенос сайта на другой домен или поддомен</li>
+        <li class="rise d3"><span class="n">03</span>Копия сайта заказчику — без доступа к живому серверу</li>
+        <li class="rise d4"><span class="n">04</span>Снятие сайта перед доработками — чтобы было с чем сравнивать</li>
+      </ul>
+      <div class="before rise d3">
+        <p>Раньше: ручная выгрузка. Загрузчик качает <b>25 000 адресов вместо 5 000</b> из-за одного тега в разметке.</p>
+        <div class="gap"></div>
+        <p>Половина картинок не открывается, ссылки ведут в никуда. Перебивка по файлу за файлом — <b>дни работы</b>, и всё равно что-то забывается.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3 -->
+  <section class="slide">
+    <div class="passport"><span>03 · <b>ЧТО ЭТО ТАКОЕ</b></span><span>скилл = методика для ассистента</span></div>
+    <div class="kicker rise">Методика по шагам плюс вспомогательные скрипты</div>
+    <h2 class="rise">Три продукта <em>из одной цепочки</em></h2>
+    <div class="products">
+      <div class="card rise d1">
+        <span class="num">ПРОДУКТ 1</span>
+        <h3>Архив</h3>
+        <p>Полная копия, открывается на компьютере без интернета: страницы, картинки, стили, все ссылки работают. Бэкап, снимок перед доработками, материал для аудита.</p>
+      </div>
+      <div class="card rise d2">
+        <span class="num">ПРОДУКТ 2</span>
+        <h3>Лендинг из копии</h3>
+        <p>Лёгкая посадочная страница из главной или из содержания всего сайта. Готова к рекламе и аналитике.</p>
+      </div>
+      <div class="card rise d3">
+        <span class="num">ПРОДУКТ 3</span>
+        <h3>Чистая копия с функционалом</h3>
+        <p>Дизайн как у исходника, без лишнего от движка. Корзина, фильтр и поиск работают без серверного движка.</p>
+      </div>
+    </div>
+    <div class="frame rise d4">Честная рамка: <b>не «нажал кнопку — получил сайт», а конвейер под управлением специалиста.</b> Работает за часы, а не недели, потому что человек не делает вручную то, что делает скрипт.</div>
+  </section>
+
+  <!-- 4 -->
+  <section class="slide">
+    <div class="passport"><span>04 · <b>КАК УСТРОЕН ПРОЦЕСС</b></span><span>пять этапов</span></div>
+    <div class="kicker rise">Каждый этап заканчивается артефактом</div>
+    <h2 class="rise d1">Процесс, который можно <em>передать и повторить</em></h2>
+    <div class="chain">
+      <div class="step rise d1"><span class="num">ЭТАП 1</span><h3>Инвентаризация</h3><p>Адреса, стили, подключения. Вопросы владельцу — одним списком до работ.</p></div>
+      <div class="step rise d2"><span class="num">ЭТАП 2</span><h3>Выгрузка</h3><p>Архив с обходом ловушек движков: base-тег, поддомены, относительные пути.</p></div>
+      <div class="step rise d3"><span class="num">ЭТАП 3</span><h3>Аудит</h3><p>Техзадание: что сломано в исходнике и что чинить у разработчика, не в копии.</p></div>
+      <div class="step rise d4"><span class="num">ЭТАП 4</span><h3>Сборка</h3><p>Из архива — выбранный продукт: архив, лендинг или чистая копия.</p></div>
+      <div class="step rise d4"><span class="num">ЭТАП 5</span><h3>Приёмка</h3><p>Формальная проверка по критериям, заданным заранее.</p></div>
+    </div>
+    <div class="artifacts">
+      <div class="principle rise d5">Правило: правки — только в скрипты сборки.<br><span>Пересобрали с нуля — все исправления на месте.</span></div>
+      <p class="art-note rise d5">Каждый этап оставляет артефакт: реестр адресов, архив, отчёт, журнал правок. Работу можно <b>передать другому исполнителю, проверить и повторить с нуля</b> с тем же результатом. Это методика, а не «у Вани в голове».</p>
+    </div>
+  </section>
+
+  <!-- 5 -->
+  <section class="slide">
+    <div class="passport"><span>05 · <b>ЧТО УМЕЕТ НА ПРАКТИКЕ</b></span><span>только проверенное</span></div>
+    <div class="kicker rise">Без обещаний на будущее — то, что работает на живых задачах</div>
+    <h2 class="rise d1">Семь возможностей, <em>проверенных в деле</em></h2>
+    <div class="abilities">
+      <div class="ab rise d1"><span class="mark">01</span><p>Выгрузка с обходом ловушек движков <span>— 73 000 битых ссылок переписаны программно</span></p></div>
+      <div class="ab rise d2"><span class="mark">02</span><p>Чистка от следов движка и мусорных скриптов <span>— каждая итерация со визуальной сверкой</span></p></div>
+      <div class="ab rise d3"><span class="mark">03</span><p>Перебивка ссылок при смене домена и схемы адресов</p></div>
+      <div class="ab rise d4"><span class="mark">04</span><p>Перекомпоновка стилей: критические, общие, постраничные</p></div>
+      <div class="ab rise d5"><span class="mark">05</span><p>Формы с отправкой заявок на почту <span>— на статике, без движка</span></p></div>
+      <div class="ab rise d5"><span class="mark">06</span><p>Фильтр и корзина товара <span>— работают на данных в файле</span></p></div>
+      <div class="ab rise d6"><span class="mark">07</span><p>Выкладка на хостинг <span>— с журналом правок и приёмкой</span></p></div>
+    </div>
+  </section>
+
+  <!-- 6 -->
+  <section class="slide">
+    <div class="passport"><span>06 · <b>КЕЙС</b></span><span>промышленный производитель · 5 дней</span></div>
+    <div class="kicker rise">Один проект — три продукта</div>
+    <h2 class="rise d1">prom-opora.ru: <em>три продукта за пять дней</em></h2>
+    <div class="case">
+      <div class="fact rise d1">
+        <h3>Архив основного сайта</h3>
+        <dl>
+          <dt>Файлов</dt><dd><b>5 070</b></dd>
+          <dt>Выгрузка</dt><dd><b>минуты</b></dd>
+          <dt>Исходник</dt><dd>только чтение</dd>
+        </dl>
+      </div>
+      <div class="fact rise d2">
+        <h3>Лендинг на поддомен</h3>
+        <dl>
+          <dt>Главная</dt><dd>15,9 → <b>7,7 МБ</b></dd>
+          <dt>Почта заявок</dt><dd>SMTP, подпись пройдена</dd>
+          <dt>Цели аналитики</dt><dd><b>47</b></dd>
+          <dt>Приёмка</dt><dd><b>117 из 117</b></dd>
+        </dl>
+      </div>
+      <div class="fact rise d3">
+        <h3>Полная копия на поддомен</h3>
+        <dl>
+          <dt>Страниц в реестре</dt><dd><b>459</b></dd>
+          <dt>Стили</dt><dd>2,09 → <b>1,25 МБ</b></dd>
+          <dt>Приёмка</dt><dd><b>98 994</b> ссылки</dd>
+          <dt>На хостинге</dt><dd>300 МБ</dd>
+        </dl>
+      </div>
+    </div>
+    <p class="quote rise d4"><span>Выгрузка занимает минуты, приёмка и доведение до качества — часы.</span></p>
+  </section>
+
+  <!-- 7 -->
+  <section class="slide">
+    <div class="passport"><span>07 · <b>ЧЕГО МЕТОДИКА НЕ ДЕЛАЕТ</b></span><span>ограничения</span></div>
+    <div class="kicker rise">Слайд, которого обычно не бывает в презентациях</div>
+    <h2 class="rise d1">Честнее сказать <em>сразу</em></h2>
+    <div class="limits">
+      <ul>
+        <li class="rise d1"><span class="n">—</span><p>Личные кабинеты и серверная логика <span>на статике не воспроизводятся</span></p></li>
+        <li class="rise d2"><span class="n">—</span><p>Сайты на данных реального времени <span>— методика не подходит, копия будет врать</span></p></li>
+        <li class="rise d3"><span class="n">—</span><p>Дефекты исходника не чиним молча <span>— собираем в инструкцию разработчику: 95 битых картинок и 404 в карте сайта ушли клиенту списком с адресами</span></p></li>
+      </ul>
+      <div class="why rise d3">
+        <h3>Зачем этот слайд</h3>
+        <p>Ограничения, озвученные заранее, <b>снимают возражения до того, как их зададут</b>. Клиент, которому сказали «это не сделает», верит остальным цифрам сильнее.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8 -->
+  <section class="slide">
+    <div class="passport"><span>08 · <b>ДЕМО</b></span><span>интернет не требуется</span></div>
+    <div class="kicker rise">Живая демонстрация</div>
+    <h2 class="rise d1">Сначала архив — <em>потом живой сайт</em></h2>
+    <div class="demo">
+      <div class="demo-step rise d1">
+        <span class="tag">Шаг 1 · локальный архив</span>
+        <h3>Без интернета</h3>
+        <p>Открывается с диска. Ссылки работают, фильтр фильтрует, поиск ищет. Тестовая заявка уходит и приходит на почту.</p>
+      </div>
+      <div class="demo-step rise d2">
+        <span class="tag">Шаг 2 · живой адрес</span>
+        <h3>Тот же сайт на хостинге</h3>
+        <p>Та же логика, та же корзина, тот же фильтр — по настоящему адресу в интернете, у клиента.</p>
+      </div>
+    </div>
+    <p class="demo-line rise d3">Разница между двумя вкладками и есть результат методики: <b>первая собрана из архива за часы, вторая — рабочий сайт.</b></p>
+  </section>
+
+  <!-- 9 -->
+  <section class="slide">
+    <div class="passport"><span>09 · <b>РАЗВИТИЕ И ВОПРОСЫ</b></span><span>финал</span></div>
+    <div class="kicker rise">Методика живая</div>
+    <h2 class="rise d1">Что готово и <em>куда растём</em></h2>
+    <div class="final">
+      <ul class="status">
+        <li class="rise d1"><span class="dot done"></span><p>Скилл «Копия сайтов» — <b class="accent">готов</b></p></li>
+        <li class="rise d2"><span class="dot done"></span><p>Скилл «Формы на статике» — <b class="accent">готов</b></p></li>
+        <li class="rise d3"><span class="dot wip"></span><p>Статическая копия с функционалом — черновик собран</p></li>
+        <li class="rise d4"><span class="dot wip"></span><p>Расширение списка движков, шаблоны приёмки — в планах</p></li>
+      </ul>
+      <div class="cta rise d4">
+        <h3>Принесите свой сайт</h3>
+        <p>Один прогон показывает состояние сайта лучше любого аудита. Находки почти гарантированы: битые ссылки, ошибки в карте сайта, мусорные скрипты, следы старых доменов.</p>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<div class="nav">
+  <button id="prev" type="button">&larr; назад</button>
+  <span class="counter">СЛАЙД <b id="cur">01</b> / <span id="total">09</span></span>
+  <button id="next" type="button">вперёд &rarr;</button>
+</div>
+
+<script>
+(function(){
+  var slides = document.querySelectorAll('.slide');
+  var i = 0;
+  var cur = document.getElementById('cur');
+  var total = document.getElementById('total');
+  var progress = document.getElementById('progress');
+  total.textContent = String(slides.length).padStart(2,'0');
+
+  function show(n){
+    i = Math.max(0, Math.min(slides.length-1, n));
+    slides.forEach(function(s,k){ s.classList.toggle('active', k===i); });
+    cur.textContent = String(i+1).padStart(2,'0');
+    progress.style.width = ((i+1)/slides.length*100)+'%';
+  }
+  document.getElementById('next').addEventListener('click', function(){ show(i+1); });
+  document.getElementById('prev').addEventListener('click', function(){ show(i-1); });
+  document.addEventListener('keydown', function(e){
+    if(['ArrowRight','ArrowDown','PageDown',' ','PageDown'].indexOf(e.key)>=0){ e.preventDefault(); show(i+1); }
+    if(['ArrowLeft','ArrowUp','PageUp'].indexOf(e.key)>=0){ e.preventDefault(); show(i-1); }
+    if(e.key==='Home'){ show(0); }
+    if(e.key==='End'){ show(slides.length-1); }
+  });
+  // перезапуск анимаций появления при возврате на слайд
+  slides.forEach(function(s){
+    new MutationObserver(function(){
+      if(s.classList.contains('active')){
+        s.querySelectorAll('.rise').forEach(function(el){
+          el.style.animation='none'; void el.offsetWidth; el.style.animation='';
+        });
+      }
+    }).observe(s,{attributes:true,attributeFilter:['class']});
+  });
+  show(0);
+})();
+</script>
+</body>
+</html>
